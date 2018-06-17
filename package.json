@@ -1,0 +1,17 @@
+{
+  "name": "sophie-bot",
+  "version": "1.0.0",
+  "description": "General Purpose Discord Bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jaylon Gowie",
+  "license": "ISC",
+  "dependencies": {
+    "eslint": "^4.19.1",
+    "opusscript": "0.0.6",
+    "xml2js": "^0.4.19",
+    "ytdl-core": "^0.20.4"
+  }
+}
