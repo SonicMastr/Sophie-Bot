@@ -21,7 +21,7 @@ client.on('ready', () => {
 	// Set Online Status of Bot
 	client.user.setStatus('Online');
 	// Set Currently Playing or Streaming
-	client.user.setActivity('with your hearts');
+	client.user.setActivity('with your hearts | ' + `${prefix}` + 'help');
 
 });
 
