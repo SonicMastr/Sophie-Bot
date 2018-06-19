@@ -9,9 +9,14 @@
   "author": "Jaylon Gowie",
   "license": "ISC",
   "dependencies": {
+    "discord.js": "^11.3.2",
+    "discord.js-musicbot-addon": "^12.0.6",
     "eslint": "^4.19.1",
-    "opusscript": "0.0.6",
+    "ffmpeg": "0.0.4",
+    "node-opus": "^0.3.0",
     "xml2js": "^0.4.19",
-    "ytdl-core": "^0.20.4"
+    "youtube-playlist-info": "^1.1.2",
+    "ytdl-core": "^0.20.4",
+    "ytsearcher": "^1.0.3"
   }
 }

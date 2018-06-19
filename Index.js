@@ -1,6 +1,7 @@
 ﻿const fs = require('fs');
 const Discord = require('discord.js');
-const { prefix, token } = require('./config.json');
+const { prefix, token, API } = require('./config.json');
+const Music = require('discord.js-musicbot-addon');
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
@@ -113,4 +114,19 @@ client.on('message', message => {
 		message.reply('there was an error trying to execute that command!');
 	}
 });
+
+Music.start(client, {
+	youtubeKey: `${API}`,
+	prefix: `${prefix}`,
+	clearOnLeave: true,
+	requesterName: true,
+	anyoneCanJoin: true,
+	anyoneCanLeave: true,
+	anyoneCanSkip: true,
+	anyoneCanPause: true,
+	defVolume: 60,
+});
+
+process.on('unhandledRejection', console.error);
+process.on('uncaughtException', console.error);
 client.login(token);
