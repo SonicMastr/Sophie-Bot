@@ -4,12 +4,12 @@ const xml2js = require('xml2js');
 
 
 module.exports = {
-	name: 'rule34',
-	aliases: ['r34'],
-	args: true,
+	name: 'kona',
+	aliases: ['kon'],
 	nsfw: true,
+	args: true,
 	usage: '<tag>',
-	description: 'Posts lewd image from rule34.xxx :sweat_drops:',
+	description: 'Posts lewd image from konachan.com :sweat_drops:',
 
 	execute(message, args) {
 		try {
@@ -21,7 +21,7 @@ module.exports = {
 				else {
 					var argR = args;
 				}
-				const url = 'https://rule34.xxx/index.php?page=dapi&s=post&q=index&tags=' + argR.join('_');
+				const url = 'https://konachan.com/post.xml?limit=250&tags=' + argR.join('_') + '%20order:score%20rating:explict';
 
 				https.get(url, function(res) {
 					let body = '';
@@ -32,22 +32,23 @@ module.exports = {
 					res.on('end', function() {
 						const parser = new xml2js.Parser();
 						parser.parseString(body, function(err, result) {
-							let postCount = result.posts.$.count - 1;
+							let postCount = result.posts.$.count + 1;
 							if(postCount > 100) {
 								postCount = 100;
 							}
 							if(postCount > 0) {
 								const picNum = Math.floor(Math.random() * postCount) + 0;
-								const r34Pic = result.posts.post[picNum].$.file_url;
+								if(picNum === 0) return message.reply(' sorry! Couldn\'t find anything for that. Try searching something else.');
+								const konPic = result.posts.post[picNum].$.file_url;
 								console.log(result.posts.post[picNum].$.file_url);
 								message.channel.send({
 									'embed': {
 										'image': {
-											'url': r34Pic,
+											'url': konPic,
 										  },
 										'footer': {
 											'text': 'Tags: ' + argR.join(' '),
-											'url': r34Pic,
+											'url': konPic,
 
 										},
 									},
