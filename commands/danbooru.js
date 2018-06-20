@@ -4,19 +4,20 @@ const xml2js = require('xml2js');
 
 
 module.exports = {
-	name: 'gelbooru',
-	aliases: ['gel'],
+	name: 'danbooru',
+	aliases: ['dan'],
 	nsfw: true,
 	usage: '<tag>',
-	description: 'Posts lewd image from gelbooru.com :sweat_drops:',
+	description: 'Posts lewd image from danbooru.donmai.us :sweat_drops:',
 
 	execute(message, args) {
 		try {
 			// Currently there is something wrong with Commando nsfw detection... So better make sure this works
 			if(message.channel.nsfw) {
+
 				const argR = args;
 
-				const url = 'https://www.gelbooru.com/index.php?page=dapi&s=post&q=index&limit=250&tags=' + argR.join('_') + '+-loli+-pokemon+-beastiality+-furry+-yaoi+sort%3ascore%3adesc+rating%3aexplicit';
+				const url = 'https://danbooru.donmai.us/posts.xml?limit=250&tags=' + argR.join('_') + '%20rating:explict';
 
 				https.get(url, function(res) {
 					let body = '';
@@ -27,12 +28,12 @@ module.exports = {
 					res.on('end', function() {
 						const parser = new xml2js.Parser();
 						parser.parseString(body, function(err, result) {
-							let postCount = result.posts.$.count;
-							if(postCount > 250) {
-								postCount = 250;
+							let postCount = result.posts.post.length;
+							if(postCount > 100) {
+								postCount = 100;
 							}
 							if(postCount > 0) {
-								const picNum = Math.floor(Math.random() * postCount);
+								const picNum = Math.ceil(Math.random() * postCount);
 								if(picNum === 0) {
 									return message.channel.send({
 										'embed': {
@@ -41,18 +42,18 @@ module.exports = {
 										},
 									});
 								}
-								const gelPic = result.posts.post[picNum].$.file_url;
-								console.log(result.posts.post[picNum].$.file_url);
-								if (gelPic.endsWith('.webm')) return message.channel.send(gelPic);
+								const danPic = result.posts.post[picNum]["file-url"];
+								console.log((result.posts.post[picNum]["file-url"]).toString());
+								if (danPic.toString().endsWith('.webm') || danPic.toString().endsWith('.mpg')) return message.channel.send(danPic.toString());
 								message.channel.send({
 									'embed': {
-										'description': ' [Tag: ' + argR.join(' ') + `](${gelPic})`,
+										'description': ' [Tag: ' + argR.join(' ') + `](${danPic.toString()})`,
 										'color': 12390624, // Purple Color
 										'image': {
-											'url': gelPic,
+											'url': danPic.toString(),
 										},
 										'footer': {
-											'text': 'Gelbooru',
+											'text': 'Danbooru',
 
 										},
 									},

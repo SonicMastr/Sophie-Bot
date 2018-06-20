@@ -17,7 +17,7 @@ module.exports = {
 
 				const argR = args;
 
-				const url = 'https://yande.re/post.xml?limit=250&tags=' + argR.join('_') + '+-furry+-yaoi%20order:score%20rating:explict';
+				const url = 'https://yande.re/post.xml?limit=250&tags=' + argR.join('_') + '+-loli+-furry+-yaoi%20order:score%20rating:explict';
 
 				https.get(url, function(res) {
 					let body = '';
