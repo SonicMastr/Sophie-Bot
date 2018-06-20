@@ -1,3 +1,4 @@
+const Discord = require('discord.js');
 const { prefix } = require('../config.json');
 module.exports = {
 	name: 'help',
@@ -6,22 +7,39 @@ module.exports = {
 	usage: '[command name]',
 	cooldown: 5,
 	execute(message, args) {
-		const data = [];
 		const { commands } = message.client;
 
 		if (!args.length) {
-			data.push('Here\'s a list of all my commands:');
-			data.push(commands.map(command => command.name).join(', '));
-			data.push(`\nYou can send \`${prefix}help [command name]\` to get info on a specific command!`);
+			const embed = new Discord.RichEmbed();
 
-			return message.author.send(data, { split: true })
+			embed.setAuthor('Sophie Bot Commands', message.client.user.avatarURL);
+			embed.setDescription(`\nYou can send \`${prefix}help [command name]\` to get info on a specific command!\nFor music commands, send \`${prefix}musichelp\` in your server's dedicated channel. (Does not work in DMs)`);
+			embed.setColor('32C911'); // same green as below, just in hex
+			const newCmds = Array.from(commands);
+			for (let i = 0; i < newCmds.length; i++) {
+				const thisCmd = newCmds[i][1];
+				if (!thisCmd.disabled) {
+					embed.addField(thisCmd.name, thisCmd.description);
+				}
+			}
+			return message.author.send({ embed })
 				.then(() => {
 					if (message.channel.type === 'dm') return;
-					message.reply('I\'ve sent you a DM with all my commands!');
+					message.channel.send({
+						'embed': {
+							'description': '<@' + message.author.id + '>, I\'ve sent you a DM with all my commands!',
+							'color': 3328273, // Green Color
+						},
+					});
 				})
 				.catch(error => {
 					console.error(`Could not send help DM to ${message.author.tag}.\n`, error);
-					message.reply('it seems like I can\'t DM you! Do you have DMs disabled?');
+					message.channel.send({
+						'embed': {
+							'description': '<@' + message.author.id + '>, looks like I can\'t DM you. Do you have DMs Disabled?',
+							'color': 14226219, // Red Color
+						},
+					});
 				});
 		}
 		const name = args[0].toLowerCase();
@@ -31,13 +49,19 @@ module.exports = {
 			return message.reply('that\'s not a valid command!');
 		}
 
-		data.push(`**Name:** ${command.name}`);
+		const embed = new Discord.RichEmbed();
 
-		if (command.aliases) data.push(`**Aliases:** ${command.aliases.join(', ')}`);
-		if (command.description) data.push(`**Description:** ${command.description}`);
-		if (command.usage) data.push(`**Usage:** ${prefix}${command.name} ${command.usage}`);
+		embed.setAuthor(command.name, message.client.user.avatarURL);
 
-		message.channel.send(data, { split: true });
+		if (command.aliases) embed.addField('Aliases', command.aliases.join(', '), true);
+		if (command.description) embed.setDescription('**Description:** ' + command.description);
+		if (command.usage) embed.addField('Usage', command.usage, true);
+
+		embed.setColor('32C911'); // same green as above, just in hex
+
+		message.channel.send({
+			embed,
+		  });
 
 		// ...
 	},

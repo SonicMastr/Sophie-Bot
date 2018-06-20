@@ -42,12 +42,13 @@ module.exports = {
 								console.log(result.posts.post[picNum].$.file_url);
 								message.channel.send({
 									'embed': {
-										'image': {
-											'url': r34Pic,
+										"description": " [Tag: " + argR.join(' ') + `](${r34Pic})`,
+										"color": 12390624,    //Purple Color
+										"image": {
+											"url": r34Pic,
 										  },
-										'footer': {
-											'text': 'Tags: ' + argR.join(' '),
-											'url': r34Pic,
+										"footer": {
+											"text": "Rule34",
 
 										},
 									},
@@ -56,7 +57,12 @@ module.exports = {
 							}
 							else {
 								console.log('Nothing found:', argR);
-								message.channel.send('I couldn\'t find anything. How about trying something else?');
+								message.channel.send({
+									'embed': {
+										"description": "**" + message.author.tag + "** I couldn't find anything. Try searching something else.",
+										"color": 14226219,    //Red Color
+									},
+								});
 							}
 						});
 					});

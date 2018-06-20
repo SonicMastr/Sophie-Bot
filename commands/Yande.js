@@ -38,17 +38,23 @@ module.exports = {
 							}
 							if(postCount > 0) {
 								const picNum = Math.floor(Math.random() * postCount) + 0;
-								if(picNum === 0) return message.reply(' sorry! Couldn\'t find anything for that. Try searching something else.');
+								if(picNum === 0) return message.channel.send({
+									'embed': {
+										"description": "**" + message.author.tag + "** I couldn't find anything. Try searching something else.",
+										"color": 14226219,    //Red Color
+									},
+								});
 								const yanPic = result.posts.post[picNum].$.file_url;
 								console.log(result.posts.post[picNum].$.file_url);
 								message.channel.send({
 									'embed': {
-										'image': {
-											'url': yanPic,
+										"description": " [Tag: " + argR.join(' ') + `](${yanPic})`,
+										"color": 12390624,    //Purple Color
+										"image": {
+											"url": yanPic,
 										  },
-										'footer': {
-											'text': 'Tags: ' + argR.join(' '),
-											'url': yanPic,
+										"footer": {
+											"text": "Yande.re",
 
 										},
 									},
@@ -57,7 +63,12 @@ module.exports = {
 							}
 							else {
 								console.log('Nothing found:', argR);
-								message.channel.send('I couldn\'t find anything. How about trying something else?');
+								message.channel.send({
+									'embed': {
+										"description": "**" + message.author.tag + "** I couldn't find anything. Try searching something else.",
+										"color": 14226219,    //Red Color
+									},
+								});
 							}
 						});
 					});

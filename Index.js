@@ -73,7 +73,12 @@ client.on('message', message => {
 			reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
 		}
 
-		return message.channel.send(reply);
+		return message.channel.send({
+			'embed': {
+				"description": reply,
+				"color": 14226219,    //Red Color
+			},
+		});
 	}
 	if (((message.author.id !== '450878704973774849') || (message.author.id !== '294544470953689088')) && command.sophie) return;
 
