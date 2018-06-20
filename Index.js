@@ -29,27 +29,6 @@ client.on('message', message => {
 
 	// this section is for listeners
 
-	if ((message.content.includes(':(') || message.content.includes('):') || message.content.includes('😦')) && !message.author.bot) {
-		return message.channel.send('Why so sad? :(');
-	}
-	if (message.content.startsWith('yaw') || message.content.includes('Yaw') || message.content.includes('YAW')) {
-		return message.channel.send('Yeet!');
-	}
-	if (message.content.includes('furry') || message.content.includes('Furry') || message.content.includes('FURRY')) {
-		return message.channel.send('You mean ***Beastiality?***');
-	}
-	if (message.content.includes('yote') || message.content.includes('Yote') || message.content.includes('YOTE')) {
-		return message.channel.send('**Ahem**. I think you meant yeeted.');
-	}
-	if (message.content.includes('loli') || message.content.includes('Loli')) {
-		return message.channel.send('FBI! OPEN UP!');
-	}
-	if (message.content.startsWith('despacito') || message.content.startsWith('Despacito')) {
-		return message.channel.send('https://pics.me.me/despacito-despacito-30205129.png');
-	}
-	if ((message.content.startsWith('no') || message.content.startsWith('No')) && !message.author.bot) {
-		return message.channel.send('Yes');
-	}
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
 
 	const args = message.content.slice(prefix.length).split(/ +/);
