@@ -75,8 +75,8 @@ client.on('message', message => {
 
 		return message.channel.send({
 			'embed': {
-				"description": reply,
-				"color": 14226219,    //Red Color
+				'description': reply,
+				'color': 14226219, // Red Color
 			},
 		});
 	}

@@ -7,7 +7,6 @@ module.exports = {
 	name: 'gelbooru',
 	aliases: ['gel'],
 	nsfw: true,
-	args: true,
 	usage: '<tag>',
 	description: 'Posts lewd image from gelbooru.com :sweat_drops:',
 
@@ -15,13 +14,9 @@ module.exports = {
 		try {
 			// Currently there is something wrong with Commando nsfw detection... So better make sure this works
 			if(message.channel.nsfw) {
-				if(args[0] === undefined) {
-					var argR = '';
-				}
-				else {
-					var argR = args;
-				}
-				const url = 'https://www.gelbooru.com/index.php?page=dapi&s=post&q=index&limit=250&tags=' + argR.join('_') + '+-beastiality+sort%3ascore%3adesc+rating%3aexplicit';
+				const argR = args;
+
+				const url = 'https://www.gelbooru.com/index.php?page=dapi&s=post&q=index&limit=250&tags=' + argR.join('_') + '+-vore+-pokemon+-beastiality+-furry+-yaoi+sort%3ascore%3adesc+rating%3aexplicit';
 
 				https.get(url, function(res) {
 					let body = '';
@@ -32,29 +27,32 @@ module.exports = {
 					res.on('end', function() {
 						const parser = new xml2js.Parser();
 						parser.parseString(body, function(err, result) {
-							let postCount = result.posts.$.count + 1;
-							if(postCount > 100) {
-								postCount = 100;
+							let postCount = result.posts.$.count;
+							if(postCount > 250) {
+								postCount = 250;
 							}
 							if(postCount > 0) {
-								const picNum = Math.floor(Math.random() * postCount) + 0;
-								if(picNum === 0) return message.channel.send({
-									'embed': {
-										"description": "**" + message.author.tag + "** I couldn't find anything. Try searching something else.",
-										"color": 14226219,    //Red Color
-									},
-								});
+								const picNum = Math.floor(Math.random() * postCount);
+								if(picNum === 0) {
+									return message.channel.send({
+										'embed': {
+											'description': '**' + message.author.tag + '** I couldn\'t find anything. Try searching something else.',
+											'color': 14226219, // Red Color
+										},
+									});
+								}
 								const gelPic = result.posts.post[picNum].$.file_url;
 								console.log(result.posts.post[picNum].$.file_url);
+								if (gelPic.endsWith('.webm')) return message.channel.send(gelPic);
 								message.channel.send({
 									'embed': {
-										"description": " [Tag: " + argR.join(' ') + `](${gelPic})`,
-										"color": 12390624,    //Purple Color
-										"image": {
-											"url": gelPic,
-										  },
-										"footer": {
-											"text": "Gelbooru",
+										'description': ' [Tag: ' + argR.join(' ') + `](${gelPic})`,
+										'color': 12390624, // Purple Color
+										'image': {
+											'url': gelPic,
+										},
+										'footer': {
+											'text': 'Gelbooru',
 
 										},
 									},
@@ -65,8 +63,8 @@ module.exports = {
 								console.log('Nothing found:', argR);
 								message.channel.send({
 									'embed': {
-										"description": "**" + message.author.tag + "** I couldn't find anything. Try searching something else.",
-										"color": 14226219,    //Red Color
+										'description': '**' + message.author.tag + '** I couldn\'t find anything. Try searching something else.',
+										'color': 14226219, // Red Color
 									},
 								});
 							}

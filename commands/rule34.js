@@ -6,7 +6,6 @@ const xml2js = require('xml2js');
 module.exports = {
 	name: 'rule34',
 	aliases: ['r34'],
-	args: true,
 	nsfw: true,
 	usage: '<tag>',
 	description: 'Posts lewd image from rule34.xxx :sweat_drops:',
@@ -15,13 +14,10 @@ module.exports = {
 		try {
 			// Currently there is something wrong with Commando nsfw detection... So better make sure this works
 			if(message.channel.nsfw) {
-				if(args[0] === undefined) {
-					var argR = '';
-				}
-				else {
-					var argR = args;
-				}
-				const url = 'https://rule34.xxx/index.php?page=dapi&s=post&q=index&tags=' + argR.join('_');
+
+				const argR = args;
+
+				const url = 'https://rule34.xxx/index.php?page=dapi&s=post&q=index&tags=' + argR.join('_') + '+-vore+-pokemon+-beastiality+-furry+-animal+-yaoi+sort%3ascore%3adesc+rating%3aexplicit';
 
 				https.get(url, function(res) {
 					let body = '';
@@ -37,18 +33,19 @@ module.exports = {
 								postCount = 100;
 							}
 							if(postCount > 0) {
-								const picNum = Math.floor(Math.random() * postCount) + 0;
+								const picNum = Math.floor(Math.random() * postCount);
 								const r34Pic = result.posts.post[picNum].$.file_url;
 								console.log(result.posts.post[picNum].$.file_url);
+								if (r34Pic.endsWith('.webm')) return message.channel.send(r34Pic);
 								message.channel.send({
 									'embed': {
-										"description": " [Tag: " + argR.join(' ') + `](${r34Pic})`,
-										"color": 12390624,    //Purple Color
-										"image": {
-											"url": r34Pic,
-										  },
-										"footer": {
-											"text": "Rule34",
+										'description': ' [Tag: ' + argR.join(' ') + `](${r34Pic})`,
+										'color': 12390624, // Purple Color
+										'image': {
+											'url': r34Pic,
+										},
+										'footer': {
+											'text': 'Rule34',
 
 										},
 									},
@@ -59,8 +56,8 @@ module.exports = {
 								console.log('Nothing found:', argR);
 								message.channel.send({
 									'embed': {
-										"description": "**" + message.author.tag + "** I couldn't find anything. Try searching something else.",
-										"color": 14226219,    //Red Color
+										'description': '**' + message.author.tag + '** I couldn\'t find anything. Try searching something else.',
+										'color': 14226219, // Red Color
 									},
 								});
 							}
