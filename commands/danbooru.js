@@ -17,7 +17,7 @@ module.exports = {
 
 				const argR = args;
 
-				const url = 'https://danbooru.donmai.us/posts.xml?limit=250&tags=' + argR.join('_') + '%20rating:explict';
+				const url = 'https://danbooru.donmai.us/posts.xml?limit=250&tags=' + argR.join("_") + '%20rating:explict';
 
 				https.get(url, function(res) {
 					let body = '';
@@ -29,12 +29,14 @@ module.exports = {
 						const parser = new xml2js.Parser();
 						parser.parseString(body, function(err, result) {
 							let postCount = result.posts.post.length;
+							console.log(postCount);
 							if(postCount > 100) {
 								postCount = 100;
 							}
+							console.log(postCount);
 							if(postCount > 0) {
 								const picNum = Math.ceil(Math.random() * postCount);
-								if(picNum === 0) {
+								if(picNum < 10) {
 									return message.channel.send({
 										'embed': {
 											'description': '**' + message.author.tag + '** I couldn\'t find anything. Try searching something else.',
@@ -42,12 +44,13 @@ module.exports = {
 										},
 									});
 								}
+								console.log(picNum);
 								const danPic = result.posts.post[picNum]["file-url"];
 								console.log((result.posts.post[picNum]["file-url"]).toString());
-								if (danPic.toString().endsWith('.webm') || danPic.toString().endsWith('.mpg')) return message.channel.send(danPic.toString());
+								if (danPic.toString().endsWith('.webm') || danPic.toString().endsWith('.mpg') || danPic.toString().endsWith('.mp4')) return message.channel.send(danPic.toString());
 								message.channel.send({
 									'embed': {
-										'description': ' [Tag: ' + argR.join(' ') + `](${danPic.toString()})`,
+										'description': ' [Tag: ' + argR.join("_") + `](${danPic.toString()})`,
 										'color': 12390624, // Purple Color
 										'image': {
 											'url': danPic.toString(),
