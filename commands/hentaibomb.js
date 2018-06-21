@@ -30,8 +30,8 @@ module.exports = {
 						const parser = new xml2js.Parser();
 						parser.parseString(body, function(err, result) {
 							let postCount = result.posts.$.count;
-							if(postCount > 100) {
-								postCount = 100;
+							if(postCount > 250) {
+								postCount = 250;
 							}
 							if(postCount > 0) {
 								const picNum = Math.floor(Math.random() * postCount);
@@ -73,8 +73,8 @@ module.exports = {
 						const parser = new xml2js.Parser();
 						parser.parseString(body, function(err, result) {
 							let postCount = result.posts.post.length;
-							if(postCount > 100) {
-								postCount = 100;
+							if(postCount > 250) {
+								postCount = 250;
 							}
 							if(postCount > 0) {
 								const picNum = Math.floor(Math.random() * postCount);
@@ -116,8 +116,8 @@ module.exports = {
 						const parser = new xml2js.Parser();
 						parser.parseString(body, function(err, result) {
 							let postCount = result.posts.$.count;
-							if(postCount > 100) {
-								postCount = 100;
+							if(postCount > 250) {
+								postCount = 250;
 							}
 							if(postCount > 0) {
 								const picNum = Math.floor(Math.random() * postCount);
