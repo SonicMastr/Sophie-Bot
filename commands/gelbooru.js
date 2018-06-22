@@ -16,7 +16,7 @@ module.exports = {
 			if(message.channel.nsfw) {
 				const argR = args;
 
-				const url = 'https://www.gelbooru.com/index.php?page=dapi&s=post&q=index&limit=250&tags=' + argR.join('_') + '+-pokemon+-beastiality+-furry+-yaoi+sort%3ascore%3adesc+rating%3aexplicit';
+				const url = 'https://www.gelbooru.com/index.php?page=dapi&s=post&q=index&limit=250&tags=' + argR.join('_') + '+-animal+-beastiality+-furry+-yaoi+sort%3ascore%3adesc+rating%3aexplicit';
 
 				https.get(url, function(res) {
 					let body = '';

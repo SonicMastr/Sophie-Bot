@@ -18,7 +18,7 @@ module.exports = {
                 const urlKon = 'https://konachan.com/post.xml?limit=250&tags=' + argR.join('_') + '+-furry+-yaoi%20order:score%20rating:explict';
                 const urlDan = 'https://danbooru.donmai.us/posts.xml?limit=250&tags=' + argR.join('_') + '%20rating:explict';
                 const urlYan = 'https://yande.re/post.xml?limit=250&tags=' + argR.join('_') + '+-furry+-yaoi%20order:score%20rating:explict';
-                const urlGel = 'https://www.gelbooru.com/index.php?page=dapi&s=post&q=index&limit=250&tags=' + argR.join('_') + '+-pokemon+-futanari+-furry+-yaoi+sort%3ascore%3adesc+rating%3aexplicit';
+                const urlGel = 'https://www.gelbooru.com/index.php?page=dapi&s=post&q=index&limit=250&tags=' + argR.join('_') + '+-animal+-futanari+-furry+-yaoi+sort%3ascore%3adesc+rating%3aexplicit';
 
 				https.get(urlKon, function(res) {
 					let body = '';
