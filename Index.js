@@ -1,10 +1,10 @@
 ﻿const fs = require('fs');
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const { prefix, token, API } = require('./config.json');
+const { prefix, token, API, DBLAPI } = require('./config.json');
 const Music = require('discord.js-musicbot-addon');
 const DBL = require("dblapi.js");
-const dbl = new DBL('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ1NzQ0NzQxNzU1MDM0MDA5OSIsImJvdCI6dHJ1ZSwiaWF0IjoxNTI5Nzk1MzA4fQ.is8-LmkH7oBIPXAOn_PvBdZ2h3VFBN5yz0jKrQ5BH5M', client);
+const dbl = new DBL(`${DBLAPI}`, client);
 
 client.commands = new Discord.Collection();
 
