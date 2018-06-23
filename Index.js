@@ -1,9 +1,11 @@
 ﻿const fs = require('fs');
 const Discord = require('discord.js');
+const client = new Discord.Client();
 const { prefix, token, API } = require('./config.json');
 const Music = require('discord.js-musicbot-addon');
+const DBL = require("dblapi.js");
+const dbl = new DBL('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ1NzQ0NzQxNzU1MDM0MDA5OSIsImJvdCI6dHJ1ZSwiaWF0IjoxNTI5Nzk1MzA4fQ.is8-LmkH7oBIPXAOn_PvBdZ2h3VFBN5yz0jKrQ5BH5M', client);
 
-const client = new Discord.Client();
 client.commands = new Discord.Collection();
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
@@ -108,6 +110,14 @@ Music.start(client, {
 	anyoneCanSkip: true,
 	anyoneCanPause: true,
 	defVolume: 60,
+});
+
+dbl.on('posted', () => {
+	console.log('Server count posted!');
+});
+
+dbl.on('error', e => {
+	console.log(`Oops! ${e}`);
 });
 
 process.on('unhandledRejection', console.error);
