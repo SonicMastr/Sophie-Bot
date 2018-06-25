@@ -76,6 +76,30 @@ client.on('message', message => {
 
 	}
 
+	if (message.content.startsWith(`${prefix}` + 'exec')) {
+		if(message.author.id !== `${ownerID}`) return;
+
+		try {
+			const code = args.join(' ');
+
+			require('child_process').exec(code, (err, out) => {
+				message.channel.send("```" + out + "```");
+			});
+		}
+		catch (err) {
+			message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
+		}
+
+	}
+
+	if (message.content.startsWith(`${prefix}` + 'clear')) {
+		if(message.author.id !== `${ownerID}`) return;
+
+		const number = args.join(' ');
+
+		message.channel.fetchMessages({limit: number}).then(messages => message.channel.bulkDelete(messages));
+
+	}
 
 	const command = client.commands.get(commandName)
 			|| client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
