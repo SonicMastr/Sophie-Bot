@@ -92,12 +92,22 @@ client.on('message', message => {
 
 	}
 
-	if (message.content.startsWith(`${prefix}` + 'clear')) {
-		if(message.author.id !== `${ownerID}`) return;
+	const perms = message.member.permissions;
+	const has_admin = perms.has("ADMINISTRATOR");
 
-		const number = args.join(' ');
+	if (message.content.startsWith(`${prefix}` + 'clear')) {
+
+		if(has_admin == false ) return;
+
+		const number2 = args.join(' ');
+		var x = parseInt(number2);
+		var y = 1;
+		var total = x + y;
+		const number = total;
 
 		message.channel.fetchMessages({limit: number}).then(messages => message.channel.bulkDelete(messages));
+
+		message.channel.send('``Cleared ' + number2 + ' message(s) successfully``').then(msg => {msg.delete(5000)});
 
 	}
 
@@ -125,7 +135,6 @@ client.on('message', message => {
 			},
 		});
 	}
-	if (((message.author.id !== '450878704973774849') || (message.author.id !== '294544470953689088')) && command.sophie) return;
 
 	if (message.content.startsWith('\'nou') || message.content.startsWith('\'help') || message.content.startsWith('\'thot') || message.content.startsWith('\'copy')) {
 		message.delete();
