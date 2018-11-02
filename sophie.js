@@ -111,6 +111,17 @@ client.on('message', message => {
 
 	}
 
+	if (message.content.startsWith(`${prefix}` + 'copy')) {
+
+		if(has_admin == false ) return;
+
+		message.delete();
+
+		message.channel.send(args.join(' '))
+
+	}
+
+
 	const command = client.commands.get(commandName)
 			|| client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
@@ -139,15 +150,6 @@ client.on('message', message => {
 	if (message.content.startsWith('\'nou') || message.content.startsWith('\'help') || message.content.startsWith('\'thot') || message.content.startsWith('\'copy')) {
 		message.delete();
 	}
-
-	if (message.content.startsWith(`${prefix}` + 'copy')) {
-
-		if(has_admin == false ) return;
-
-		message.channel.send(args.join(' '))
-
-	}
-
 
 	if (!cooldowns.has(command.name)) {
 		cooldowns.set(command.name, new Discord.Collection());
