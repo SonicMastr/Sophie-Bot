@@ -97,7 +97,7 @@ client.on('message', message => {
 
 	if (message.content.startsWith(`${prefix}` + 'clear')) {
 
-		if(has_admin == false ) return;
+		if(has_admin == false ) return message.reply("You don't have permission to use this command").then(msg => {msg.delete(5000)});
 
 		const number2 = args.join(' ');
 		var x = parseInt(number2);
