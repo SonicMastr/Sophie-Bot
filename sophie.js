@@ -115,6 +115,8 @@ client.on('message', message => {
 
 		if(has_admin == false ) return;
 
+		message.delete();
+
 		message.channel.send(args.join(' '))
 
 	}
