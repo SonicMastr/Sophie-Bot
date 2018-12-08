@@ -21,14 +21,20 @@ for (const file of commandFiles) {
 	client.commands.set(command.name, command);
 }
 
+
 client.on('ready', () => {
 // Simple Ready Message
-	console.log('Ready!');
-
+	console.log('Ready!'); 
 	// Set Online Status of Bot
 	client.user.setStatus('Online');
 	// Set Currently Playing or Streaming
-	client.user.setActivity('with Bella | ' + `${prefix}` + 'help');
+	setInterval(function() {
+		client.shard.broadcastEval('this.users.size').then((size) => {
+		let count = size.reduce((prev, val) => prev + val, 0);
+		const statuses = [`${prefix}`+'help', "with Bella", `over ${count} Users!`];
+		const status = statuses[Math.floor(Math.random() * statuses.length)];
+		client.user.setActivity(status);});
+	}, 8000);
 
 });
 
