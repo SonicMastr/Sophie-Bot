@@ -10,7 +10,6 @@ module.exports = {
     description: 'Sends multiple images. One each from Danbooru, Yande.re, Konachan, and Gelbooru.',
 	execute(message, args) {
         try {
-			// Currently there is something wrong with Commando nsfw detection... So better make sure this works
 			if(message.channel.nsfw) {
 
 				const argR = args;
