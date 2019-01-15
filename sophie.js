@@ -98,6 +98,20 @@ client.on('message', message => {
 
 	}
 
+	if (message.content.startsWith(`${prefix}` + 'update')) {
+		if(message.author.id !== `${ownerID}`) return message.reply('you can\'t do that!').then(msg => {msg.delete(5000);});
+
+		try {
+			require('child_process').exec("git pull origin master", (err, out) => {
+				message.channel.send('```' + out + '```');
+			});
+		}
+		catch (err) {
+			message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
+		}
+
+	}
+
 	const perms = message.member.permissions;
 	const has_admin = perms.has('ADMINISTRATOR');
 
