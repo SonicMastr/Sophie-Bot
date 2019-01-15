@@ -102,9 +102,23 @@ client.on('message', message => {
 		if(message.author.id !== `${ownerID}`) return message.reply('you can\'t do that!').then(msg => {msg.delete(5000);});
 
 		try {
-			require('child_process').exec("git pull origin master", (err, out) => {
+			require('child_process').exec('git pull origin master', (err, out) => {
 				message.channel.send('```' + out + '```');
 			});
+		}
+		catch (err) {
+			message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
+		}
+
+	}
+
+	if (message.content.startsWith(`${prefix}` + 'restart')) {
+		if(message.author.id !== `${ownerID}`) return message.reply('you can\'t do that!').then(msg => {msg.delete(5000);});
+
+		try {
+			message.channel.send('Going down for a resart! See you soon!').then(require('child_process').exec('pm2 restart Sophie', (err, out) => {
+				message.channel.send('```' + out + '```');
+			}));
 		}
 		catch (err) {
 			message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
