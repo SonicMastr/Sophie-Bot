@@ -24,16 +24,17 @@ for (const file of commandFiles) {
 
 client.on('ready', () => {
 // Simple Ready Message
-	console.log('Ready!'); 
+	console.log('Ready!');
 	// Set Online Status of Bot
 	client.user.setStatus('Online');
 	// Set Currently Playing or Streaming
 	setInterval(function() {
 		client.shard.broadcastEval('this.users.size').then((size) => {
-		let count = size.reduce((prev, val) => prev + val, 0);
-		const statuses = [`${prefix}`+'help', "with Bella", `over ${count} Users!`];
-		const status = statuses[Math.floor(Math.random() * statuses.length)];
-		client.user.setActivity(status);});
+			const count = size.reduce((prev, val) => prev + val, 0);
+			const statuses = [`${prefix}` + 'help', 'with Bella', `over ${count} Users!`];
+			const status = statuses[Math.floor(Math.random() * statuses.length)];
+			client.user.setActivity(status);
+		});
 	}, 8000);
 
 });
@@ -43,12 +44,11 @@ client.on('message', message => {
 	// this section is for listeners
 
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
-
 	const args = message.content.slice(prefix.length).split(/ +/);
 	const commandName = args.shift().toLowerCase();
 
 	if (message.content.startsWith(`${prefix}` + 'eval')) {
-		if(message.author.id !== `${ownerID}`) return;
+		if(message.author.id !== `${ownerID}`) return message.reply(', you can\'t do that!').then(msg => {msg.delete(5000);});
 
 		try {
 			const code = args.join(' ');
@@ -83,13 +83,13 @@ client.on('message', message => {
 	}
 
 	if (message.content.startsWith(`${prefix}` + 'exec')) {
-		if(message.author.id !== `${ownerID}`) return;
+		if(message.author.id !== `${ownerID}`) return message.reply(', you can\'t do that!').then(msg => {msg.delete(5000);});
 
 		try {
 			const code = args.join(' ');
 
 			require('child_process').exec(code, (err, out) => {
-				message.channel.send("```" + out + "```");
+				message.channel.send('```' + out + '```');
 			});
 		}
 		catch (err) {
@@ -99,31 +99,31 @@ client.on('message', message => {
 	}
 
 	const perms = message.member.permissions;
-	const has_admin = perms.has("ADMINISTRATOR");
+	const has_admin = perms.has('ADMINISTRATOR');
 
 	if (message.content.startsWith(`${prefix}` + 'clear')) {
 
-		if(has_admin == false ) return message.reply("You don't have permission to use this command").then(msg => {msg.delete(5000)});
+		if(has_admin == false) return message.reply('You don\'t have permission to use this command').then(msg => {msg.delete(5000);});
 
 		const number2 = args.join(' ');
-		var x = parseInt(number2);
-		var y = 1;
-		var total = x + y;
+		const x = parseInt(number2);
+		const y = 1;
+		const total = x + y;
 		const number = total;
 
-		message.channel.fetchMessages({limit: number}).then(messages => message.channel.bulkDelete(messages));
+		message.channel.fetchMessages({ limit: number }).then(messages => message.channel.bulkDelete(messages));
 
-		message.channel.send('``Cleared ' + number2 + ' message(s) successfully``').then(msg => {msg.delete(5000)});
+		message.channel.send('``Cleared ' + number2 + ' message(s) successfully``').then(msg => {msg.delete(5000);});
 
 	}
 
 	if (message.content.startsWith(`${prefix}` + 'copy')) {
 
-		if(has_admin == false ) return;
+		if(has_admin == false) return;
 
 		message.delete();
 
-		message.channel.send(args.join(' '))
+		message.channel.send(args.join(' '));
 
 	}
 
