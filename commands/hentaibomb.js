@@ -4,20 +4,20 @@ const xml2js = require('xml2js');
 
 
 module.exports = {
-    name: 'hentaibomb',
-    nsfw: true,
+	name: 'hentaibomb',
+	nsfw: true,
 	usage: '<tag>',
-    description: 'Sends multiple images. One each from Danbooru, Yande.re, Konachan, and Gelbooru.',
+	description: 'Sends multiple images. One each from Danbooru, Yande.re, Konachan, and Gelbooru.',
 	execute(message, args) {
-        try {
+		try {
 			if(message.channel.nsfw) {
 
 				const argR = args;
 
-                const urlKon = 'https://konachan.com/post.xml?limit=250&tags=' + argR.join('_') + '+-furry+-loli%20order:score%20rating:explict';
-                const urlDan = 'https://danbooru.donmai.us/posts.xml?limit=250&tags=' + argR.join('_') + '%20rating:explict';
-                const urlYan = 'https://yande.re/post.xml?limit=250&tags=' + argR.join('_') + '+-furry+-loli%20order:score%20rating:explict';
-                const urlGel = 'https://www.gelbooru.com/index.php?page=dapi&s=post&q=index&limit=250&tags=' + argR.join('_') + '+-shota+-animal+-futanari+-furry+-loli+sort%3ascore%3adesc+rating%3aexplicit';
+				const urlKon = 'https://konachan.com/post.xml?limit=250&tags=' + argR.join('_') + '+-furry+-loli%20order:score%20rating:explict';
+				const urlDan = 'https://danbooru.donmai.us/posts.xml?limit=250&tags=' + argR.join('_') + '%20rating:explict';
+				const urlYan = 'https://yande.re/post.xml?limit=250&tags=' + argR.join('_') + '+-furry+-loli%20order:score%20rating:explict';
+				const urlGel = 'https://www.gelbooru.com/index.php?page=dapi&s=post&q=index&limit=250&tags=' + argR.join('_') + '+-shota+-animal+-futanari+-furry+-loli+sort%3ascore%3adesc+rating%3aexplicit';
 
 				https.get(urlKon, function(res) {
 					let body = '';
@@ -60,9 +60,9 @@ module.exports = {
 					});
 				}).on('error', function(e) {
 					console.log('Got an error: ', e);
-                });
-                
-                https.get(urlDan, function(res) {
+				});
+
+				https.get(urlDan, function(res) {
 					let body = '';
 					res.on('data', function(chunk) {
 						body += chunk;
@@ -78,8 +78,8 @@ module.exports = {
 							if(postCount > 0) {
 								const picNum = Math.floor(Math.random() * postCount);
 								if(picNum === 0) return;
-								const danPic = result.posts.post[picNum]["file-url"];
-								console.log((result.posts.post[picNum]["file-url"]).toString());
+								const danPic = result.posts.post[picNum]['file-url'];
+								console.log((result.posts.post[picNum]['file-url']).toString());
 								if (danPic.toString().endsWith('.webm') || danPic.toString().endsWith('.mpg')) return message.channel.send(danPic.toString());
 								message.channel.send({
 									'embed': {
@@ -103,9 +103,9 @@ module.exports = {
 					});
 				}).on('error', function(e) {
 					console.log('Got an error: ', e);
-                });
-                
-                https.get(urlYan, function(res) {
+				});
+
+				https.get(urlYan, function(res) {
 					let body = '';
 					res.on('data', function(chunk) {
 						body += chunk;
@@ -146,9 +146,9 @@ module.exports = {
 					});
 				}).on('error', function(e) {
 					console.log('Got an error: ', e);
-                });
-                
-                https.get(urlGel, function(res) {
+				});
+
+				https.get(urlGel, function(res) {
 					let body = '';
 					res.on('data', function(chunk) {
 						body += chunk;
@@ -198,6 +198,6 @@ module.exports = {
 		catch(e) {
 			console.log(e);
 			message.channel.send('Sorry. The file was too large. Try again.');
-		}      
+		}
 	},
 };

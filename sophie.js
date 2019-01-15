@@ -48,7 +48,7 @@ client.on('message', message => {
 	const commandName = args.shift().toLowerCase();
 
 	if (message.content.startsWith(`${prefix}` + 'eval')) {
-		if(message.author.id !== `${ownerID}`) return message.reply(', you can\'t do that!').then(msg => {msg.delete(5000);});
+		if(message.author.id !== `${ownerID}`) return message.reply('you can\'t do that!').then(msg => {msg.delete(5000);});
 
 		try {
 			const code = args.join(' ');
@@ -83,7 +83,7 @@ client.on('message', message => {
 	}
 
 	if (message.content.startsWith(`${prefix}` + 'exec')) {
-		if(message.author.id !== `${ownerID}`) return message.reply(', you can\'t do that!').then(msg => {msg.delete(5000);});
+		if(message.author.id !== `${ownerID}`) return message.reply('you can\'t do that!').then(msg => {msg.delete(5000);});
 
 		try {
 			const code = args.join(' ');
