@@ -133,10 +133,7 @@ client.on('message', message => {
 
 		if(has_admin == false) return message.reply('You don\'t have permission to use this command').then(msg => {msg.delete(5000);});
 
-		const number2 = args.join(' ');
-		const x = parseInt(number2);
-		const y = 1;
-		const total = x + y;
+		const total = args + 1;
 		const number = total;
 
 		message.channel.fetchMessages({ limit: number }).then(messages => message.channel.bulkDelete(messages));
