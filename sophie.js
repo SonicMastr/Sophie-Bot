@@ -29,10 +29,12 @@ client.on('ready', () => {
 	client.user.setStatus('Online');
 	// Set Currently Playing or Streaming
 	setInterval(function() {
-		const count = client.users.size;
-		const statuses = [`${prefix}` + 'help', 'with Bella', `over ${count} Users!`];
-		const status = statuses[Math.floor(Math.random() * statuses.length)];
-		client.user.setActivity(status);
+		client.shard.broadcastEval('this.users.size').then((size) => {
+			const count = size.reduce((prev, val) => prev + val, 0);
+			const statuses = [`${prefix}` + 'help', 'with Bella', `over ${count} Users!`];
+			const status = statuses[Math.floor(Math.random() * statuses.length)];
+			client.user.setActivity(status);
+		});
 	}, 8000);
 
 });
