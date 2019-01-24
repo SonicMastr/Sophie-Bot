@@ -116,7 +116,7 @@ client.on('message', message => {
 		if(message.author.id !== `${ownerID}`) return message.reply('you can\'t do that!').then(msg => {msg.delete(5000);});
 
 		try {
-			message.channel.send('Going down for a restart! See you soon!').then(require('child_process').exec('pm2 restart Sophie', (err, out) => {
+			message.channel.send('Going down for a restart!').then(require('child_process').exec('pm2 restart Sophie', (err, out) => {
 				message.channel.send('```' + out + '```');
 			}));
 		}
