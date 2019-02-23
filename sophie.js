@@ -1,6 +1,7 @@
 ﻿const fs = require('fs');
 const Discord = require('discord.js');
 const client = new Discord.Client();
+const shook = new Discord.WebhookClient('548725631534497803', 'PeaSDECw7V12kwG_ZygVqB6jtXToT6zMDXIbGHu-QeRHiXjl5Qf07hg9wbN_ABNdZ9kU');
 const { prefix, token, API, DBLAPI, ownerID } = require('./config.json');
 const Music = require('discord.js-musicbot-addon');
 const DBL = require('dblapi.js');
@@ -217,6 +218,44 @@ client.on('message', message => {
 		console.error(error);
 		message.reply('there was an error trying to execute that command!');
 	}
+});
+
+client.on('guildCreate', g => {
+	shook.send('', {
+		"username": "Sophie",
+		"avatarURL": client.user.avatarURL,
+		"embeds": [{
+			"color": 16777215,
+			"description": "Joined a Server!",
+			"timestamp": new Date(),
+			"fields": [{
+				"name": "Guild Name",
+				"value": g.name,
+				"inline": true
+			},
+			{
+				"name": "Guild Users",
+				"value": g.memberCount,
+				"inline": true
+			}]
+		}]
+	}).then(console.log('Server Added: ' + g.name)).catch(console.error);
+});
+//Guild Leave Handler
+client.on('guildDelete', g => {
+	shook.send('', {
+		"username": "Sophie",
+		"avatarURL": client.user.avatarURL,
+		"embeds": [{
+			"color": 16777215,
+			"description": "Left a Server!",
+			"timestamp": new Date(),
+			"fields": [{
+				"name": "Guild Name",
+				"value": g.name
+			}]
+		}]
+	}).then(console.log('Server Left: ' + g.name)).catch(console.error);
 });
 
 Music.start(client, {
