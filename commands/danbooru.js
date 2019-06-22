@@ -16,7 +16,7 @@ module.exports = {
 
 				const argR = args;
 
-				const url = 'https://danbooru.donmai.us/posts.xml?limit=250&tags=' + argR.join("_") + '%20rating:explict';
+				const url = 'https://danbooru.donmai.us/posts.xml?limit=250&tags=' + argR.join('_') + '%20rating:explict';
 
 				https.get(url, function(res) {
 					let body = '';
