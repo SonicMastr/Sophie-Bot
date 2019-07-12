@@ -146,9 +146,9 @@ client.on('message', message => {
 
 	}
 
-	if (message.content.startsWith(`${prefix}` + 'copy')) {
+	if (message.content.startsWith(`${prefix}` + 'say')) {
 
-		if(has_admin == false) return;
+		if(has_admin == false && message.author.id !== `${ownerID}`) return;
 
 		message.delete();
 
