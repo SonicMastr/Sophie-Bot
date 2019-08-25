@@ -3,7 +3,6 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const shook = new Discord.WebhookClient('548725631534497803', 'PeaSDECw7V12kwG_ZygVqB6jtXToT6zMDXIbGHu-QeRHiXjl5Qf07hg9wbN_ABNdZ9kU');
 const { prefix, token, API, DBLAPI, ownerID } = require('./config.json');
-const Music = require('discord.js-musicbot-addon');
 const DBL = require('dblapi.js');
 const dbl = new DBL(`${DBLAPI}`, client);
 
@@ -256,18 +255,6 @@ client.on('guildDelete', g => {
 			}]
 		}]
 	}).then(console.log('Server Left: ' + g.name)).catch(console.error);
-});
-
-Music.start(client, {
-	youtubeKey: `${API}`,
-	prefix: `${prefix}`,
-	clearOnLeave: true,
-	requesterName: true,
-	anyoneCanJoin: true,
-	anyoneCanLeave: true,
-	anyoneCanSkip: true,
-	anyoneCanPause: true,
-	defVolume: 60,
 });
 
 dbl.on('posted', () => {

@@ -13,7 +13,7 @@ module.exports = {
 			const embed = new Discord.RichEmbed();
 
 			embed.setAuthor('Sophie Bot Commands', message.client.user.avatarURL);
-			embed.setDescription(`\nYou can send \`${prefix}help [command name]\` to get info on a specific command!\nFor music commands, send \`${prefix}musichelp\` in your server's dedicated channel. (Does not work in DMs)`);
+			embed.setDescription(`\nYou can send \`${prefix}help [command name]\` to get info on a specific command!`);
 			embed.setColor('32C911'); // same green as below, just in hex
 			const newCmds = Array.from(commands);
 			for (let i = 0; i < newCmds.length; i++) {
