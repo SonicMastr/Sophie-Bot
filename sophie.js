@@ -31,11 +31,11 @@ client.on('ready', () => {
 	setInterval(function() {
 		client.shard.broadcastEval('this.users.size').then((size) => {
 			const count = size.reduce((prev, val) => prev + val, 0);
-			const statuses = [`${prefix}` + 'help', 'with Bella', `over ${count} Users!`];
+			const statuses = [`${prefix}` + 'help', `over ${count} Users!`];
 			const status = statuses[Math.floor(Math.random() * statuses.length)];
 			client.user.setActivity(status);
 		});
-	}, 8000);
+	}, 15000);
 
 });
 
